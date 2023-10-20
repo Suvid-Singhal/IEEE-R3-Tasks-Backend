@@ -1,0 +1,44 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <h1>Cart</h1>
+        <div class="row card">
+          <div class="card-body">
+            <a class="btn btn-outline-dark" href="{% url 'store' %}" role="button"><i class="bi bi-arrow-return-left"></i> Continue Shopping</a>
+              <br><br>
+              <table class="table">
+              <tr>
+                  <th><div class="col">Items: {{order.get_cart_items}}</div></th>
+                  <th><div class="col">Total: {{order.get_cart_total}}</div></th>
+                  <th><div class="col"><div class="text-center"><a class="btn btn-success center" href="{% url 'finish_order' %}" role="button">Checkout</a></div></div></th>
+              </tr>
+          </table>
+          </div>
+        </div>
+    <br>
+    <div class="row cart-row text-center">
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-borderless">
+              <tr>
+                <th><div class="col"></div></th>
+                  <th><div class="col">Item</div></th>
+                  <th><div class="col">Price</div></th>
+                  <th><div class="col">Quantity</div></th>
+                  <th><div class="col">Total</div></th>
+              </tr>
+                {% for item in items %}
+                <tr>
+                    <td><div class="col"><img src="{{item.product.image.url}}" class="cart-img"></div></td>
+                    <td><div class="col">{{item.product.name}}</div></td>
+                    <td><div class="col">{{item.product.price}}</div></td>
+                    <td><div data-product={{item.product.id}} data-action="add" class="col"><a class="btn btn-secondary btn-sm qty-ch update-cart" href="#" role="button">- </a>{{item.quantity}}<a data-product={{item.product.id}} data-action="add" class="btn btn-secondary btn-sm qty-ch update-cart" href="#" role="button"> +</a></div></td>
+                    <td><div class="col">${{item.get_total}}</div></td>
+                </tr>
+                {% endfor %}
+          </table>
+          </div>
+        </div>
+    </div>
+
+{% endblock content %}
